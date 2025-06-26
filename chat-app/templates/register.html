@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <style>
+        body {
+            background-color: #ececf3;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            background-color: #faf7f8;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: left;
+        }
+
+        .signup-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .signup-field {
+            margin-bottom: 12px;
+        }
+
+        .signup-field strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .signup-input {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .signup-button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .signup-button:hover {
+            background-color: #0061b0;
+        }
+
+        .signup-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .signup-text a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
+    <div class="signup-container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div style="text-align: center; color:
+             {% if category == 'danger' %}red
+             {% elif category == 'warning' %}orange
+             {% elif category == 'success' %}green
+             {% else %}black
+             {% endif %};
+             font-weight: bold;
+             margin-bottom: 15px;">
+             {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <h1 class="signup-title">Sign Up</h1>
+
+        <div class="signup-field">
+            <strong>Name:</strong>
+            <input type="text" name="uname" class="signup-input" required>
+        </div>
+
+        <div class="signup-field">
+            <strong>Email:</strong>
+            <input type="email" name="uemail" class="signup-input" required>
+        </div>
+
+        <div class="signup-field">
+            <strong>Password:</strong>
+            <input type="password" name="upwd" class="signup-input" required>
+        </div>
+
+        <div class="signup-field">
+            <strong>Description:</strong>
+            <textarea name="udesc" class="signup-input" rows="3" required></textarea>
+        </div>
+
+        <div class="signup-field">
+            <strong>Profile Picture:</strong>
+            <input type="file" name="upic" class="signup-input" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="signup-button">Sign Up</button>
+
+        <div class="signup-text">
+            Already signed up? <a href="{{ url_for('login') }}">Log in here</a>.
+        </div>
+
+    </div>
+</form>
+
+</body>
+</html>

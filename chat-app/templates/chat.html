@@ -1,0 +1,78 @@
+<!-- templates/chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Room</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+<body>
+   <header class="site-header">
+    <h1>🗨️ ChatApp</h1>
+  </header>
+  <div class="chat-container">
+    <div class="sidebar">
+  <!-- Your Profile Section -->
+  <div class="my-profile">
+    <img src="data:image/png;base64,{{ user.profile_pic }}" alt="Profile" class="profile-pic">
+    <h3>{{ user.name }}</h3>
+    <p>{{ user.description }}</p>
+  </div>
+
+  <hr style="border: 0.5px solid #444; margin: 15px 0;">
+
+  <!-- Other Users Section -->
+ <h4>Chats</h4>
+<ul id="user-list">
+  {% for u in users if u._id in user.contacts %}
+  <li onclick="openChat('{{ u._id }}', '{{ u.name }}')" class="user-item" id="user-{{ u._id }}">
+    <img src="data:image/png;base64,{{ u.profile_pic }}" class="profile-pic-small" style="width: 100px;">
+    {{ u.name }}
+  </li>
+{% endfor %}
+
+</ul>
+
+
+</div>
+
+    <div class="main-chat">
+      <ul id="messages">
+        {% for msg in messages %}
+        <li class="{{ 'message sent' if msg.name == user.name else 'message received' }}">
+          <strong>{{ msg.name }}:</strong> {{ msg.text }} <span class="time">{{ msg.time }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <form id="chat-form">
+        <input id="msg" placeholder="Type a message..." autocomplete="off" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+<script>
+  const USER_NAME = "{{ user.name }}";
+  const USER_ID = "{{ user._id }}";  // 👈 required!
+  const CURRENT_CHAT_USER_ID = "{{ other_user._id if other_user else '' }}";
+
+</script>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+  <script src="{{ url_for('static', filename='client.js') }}"></script>
+<!-- Add at bottom of sidebar -->
+<button onclick="addUser()">Add User</button>
+<script>
+function addUser() {
+  const email = prompt("Enter the email of the user you want to chat with:");
+  if (email) {
+    window.location.href = `/add-contact/${email}`;
+  }
+}
+</script>
+
+
+
+</body>
+</html>

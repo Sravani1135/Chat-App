@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #ececf3;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #faf7f8;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: left;
+        }
+
+        .login-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-field {
+            margin-bottom: 12px;
+        }
+
+        .login-field strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .login-input {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .toggle-password {
+            font-size: 12px;
+            color: #4a90e2;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .login-button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .login-button:hover {
+            background-color: #0061b0;
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .login-text a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+    </script>
+</head>
+<body>
+    <form action="{{ url_for('login') }}" method="POST">
+        <div class="login-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="error-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <h1 class="login-title">Login</h1>
+
+            <div class="login-field">
+                <strong>Email:</strong>
+                <input type="email" name="pemail" class="login-input" required>
+            </div>
+
+            <div class="login-field">
+                <strong>Password:</strong>
+                <input type="password" id="password" name="ppwd" class="login-input" required>
+                <span class="toggle-password" onclick="togglePassword()">Show Password</span>
+            </div>
+
+            <button type="submit" class="login-button">Login</button>
+
+            <div class="login-text">
+                New here? <a href="{{ url_for('register') }}">Sign up</a>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

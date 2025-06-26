@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flask Chat App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div id="chat-container">
+    <h2>Flask Real-Time Chat</h2>
+    <ul id="messages"></ul>
+    <form id="chat-form">
+      <input id="msg" autocomplete="off" placeholder="Type a message...">
+      <button>Send</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='client.js') }}"></script>
+</body>
+</html>
