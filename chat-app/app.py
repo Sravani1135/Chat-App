@@ -50,8 +50,11 @@ def register():
         name = request.form['uname']
         email = request.form['uemail'].strip().lower()
         password = request.form['upwd']
+        hashed_pw = generate_password_hash(password)  # ✅ Hash password here
+
         desc = request.form['udesc']
         pic = request.files['upic']
+
 
         if users_col.find_one({'email': email}):
             flash('Email already registered!', 'danger')
@@ -65,7 +68,7 @@ def register():
     'password': hashed_pw,
     'description': desc,
     'profile_pic': profile_pic,
-    "contacts": [ObjectId("..."), ObjectId("...")]
+    "contacts": []
   # NEW: holds ObjectId references to added users
 }
 
